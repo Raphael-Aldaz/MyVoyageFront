@@ -1,0 +1,18 @@
+<div class="h-[820px] relative">
+  <mat-grid-list  cols="3" rowHeight="2:1" >
+    <mat-grid-tile *ngFor="let hotel of hotels">
+      <app-card
+      [hotel]="hotel"
+      />
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-paginator
+  [length]="totalHotels"
+  [pageSize]="6"
+  (page)="onChange($event)"
+  class="absolute bottom-0 left-0 right-0"
+  >
+  </mat-paginator>
+
+
+</div>
