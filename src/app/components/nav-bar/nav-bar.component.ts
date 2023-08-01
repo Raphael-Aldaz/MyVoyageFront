@@ -30,5 +30,8 @@ export class NavBarComponent implements OnInit {
     this.hotelService.getHotelByKw(this.kw,0)
 
   }
+  refreshList(){
+    this.hotelService.getAllHotels(0);
+  }
 
 }

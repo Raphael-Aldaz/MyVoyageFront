@@ -25,7 +25,10 @@ export class MainComponent implements OnInit {
     this.hotelService.statusSubject$.subscribe({
       next: (data) => this.errorStatus = data
     })
+
+
   }
+
 
   onChange(e : PageEvent ){
     this.hotelService.getAllHotels(e.pageIndex)
