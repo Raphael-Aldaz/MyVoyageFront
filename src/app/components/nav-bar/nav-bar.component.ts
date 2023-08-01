@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { City } from 'src/app/models/city.models';
+import { AuthService } from 'src/app/services/AuthService/auth.service';
 import { CityService } from 'src/app/services/CityService/city.service';
 import { HotelService } from 'src/app/services/HotelService/hotel.service';
 
@@ -10,14 +11,22 @@ import { HotelService } from 'src/app/services/HotelService/hotel.service';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
+  isConnected : boolean = false
   destinations$ : City[] = []
   kw : string = ""
-  constructor(private cityService : CityService, private hotelService : HotelService){}
+  constructor(private cityService : CityService, private hotelService : HotelService, private auth:AuthService){}
   ngOnInit(): void {
     this.cityService.hotels$.subscribe({
       next:(data)=> {
         this.destinations$ = data;
       }
+    })
+    this.auth.isConnected$.subscribe({
+      next : (data) => {
+        this.isConnected = data;
+      },
+      error : (error) => console.error(error)
+
     })
 
   }
@@ -32,6 +41,11 @@ export class NavBarComponent implements OnInit {
   }
   refreshList(){
     this.hotelService.getAllHotels(0);
+  }
+
+  logout(){
+    localStorage.removeItem("jwt")
+    this.auth.isConnected$.next(false)
   }
 
 }

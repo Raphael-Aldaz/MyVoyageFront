@@ -19,12 +19,12 @@ export class MainComponent implements OnInit {
         this.hotels = data;
       }
     })
-
     this.hotelService.totalHotelsSubject$.subscribe((data) => this.totalHotels = data)
-
     this.hotelService.statusSubject$.subscribe({
       next: (data) => this.errorStatus = data
     })
+
+    this.hotelService.getAllHotels(0);
 
 
   }
