@@ -20,6 +20,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { HotelComponent } from './components/hotel/hotel.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 
@@ -32,6 +33,7 @@ import { HotelComponent } from './components/hotel/hotel.component';
     FooterComponent,
     NavBarComponent,
     HotelComponent,
+    LoginComponent,
 
   ],
   imports: [
