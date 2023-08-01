@@ -38,4 +38,7 @@ export class ApiService {
     return this.http.get<ResponsePagination>(environment.host+"/hotelsByDest?kw=" + kw + "&page=" + page, {observe : 'response'})
 
   }
+  public loginApi(user : FormData){
+    return this.http.post( "http://localhost:8080/login", user, {observe : 'response'})
+  }
 }
