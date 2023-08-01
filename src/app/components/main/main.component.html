@@ -1,5 +1,5 @@
-<div class="h-[820px] relative">
-  <mat-grid-list  cols="3" rowHeight="2:1" >
+<div class="h-[820px] relative" >
+  <mat-grid-list  cols="3" rowHeight="2:1" *ngIf="errorStatus !== 404">
     <mat-grid-tile *ngFor="let hotel of hotels">
       <app-card
       [hotel]="hotel"
@@ -14,5 +14,7 @@
   >
   </mat-paginator>
 
-
+  <div *ngIf="errorStatus === 404">
+    <h1>Pas d'hotel trouvé pour cette destination</h1>
+  </div>
 </div>

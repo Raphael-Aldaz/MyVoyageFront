@@ -11,17 +11,20 @@ import { PageEvent} from '@angular/material/paginator';
 export class MainComponent implements OnInit {
   hotels : Hotel[] = [];
   totalHotels! : number;
-  error: string= "";
+  errorStatus!: number;
   constructor(private hotelService : HotelService){}
   ngOnInit(): void {
-    this.hotelService.hotels$.subscribe({
+    this.hotelService.hotelSubject$.subscribe({
       next : (data) => {
         this.hotels = data;
-      },
-      error : (err) => this.error = err
+      }
     })
 
-    this.hotelService.totalTrainings$.subscribe((data) => this.totalHotels = data)
+    this.hotelService.totalHotelsSubject$.subscribe((data) => this.totalHotels = data)
+
+    this.hotelService.statusSubject$.subscribe({
+      next: (data) => this.errorStatus = data
+    })
   }
 
   onChange(e : PageEvent ){
