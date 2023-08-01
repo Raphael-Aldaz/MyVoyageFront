@@ -10,14 +10,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardComponent } from './components/card/card.component';
 
 
-import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { MatPaginatorModule} from '@angular/material/paginator';
 
+
+
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FooterComponent } from './components/footer/footer.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 
 
@@ -28,6 +29,7 @@ import { FooterComponent } from './components/footer/footer.component';
     MainComponent,
     CardComponent,
     FooterComponent,
+    NavBarComponent,
 
   ],
   imports: [
@@ -38,11 +40,11 @@ import { FooterComponent } from './components/footer/footer.component';
     FormsModule,
     MatGridListModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
     MatIconModule,
-    MatInputModule,
     MatPaginatorModule,
     FontAwesomeModule,
+
+
 
   ],
   providers: [],
