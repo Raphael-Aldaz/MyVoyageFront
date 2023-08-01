@@ -10,57 +10,43 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class HotelService {
 
-  private statusSubject$:BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  status: Observable<number> = this.statusSubject$.asObservable();
-
-  private hotelSubject$:BehaviorSubject<Hotel[]> = new BehaviorSubject<Hotel[]>([]);
-  hotels$ : Observable<Hotel[]> = this.hotelSubject$.asObservable();
-
-  private totalHotelsSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  totalHotels$: Observable<number> = this.totalHotelsSubject$.asObservable();
+  hotelSubject$: Subject<Hotel[]> = new Subject<Hotel[]>();
+  totalHotelsSubject$: Subject<number> = new Subject<number>();
+  statusSubject$: Subject<number> = new Subject<number>();
 
   constructor(private apiService: ApiService) {
     this.getAllHotels(0)
-   }
+  }
 
-  getAllHotels(page : number){
+  private handleResponseData(data: any) {
+    this.hotelSubject$.next(data.body?.content || []);
+    this.totalHotelsSubject$.next(data.body?.totalElements || 0);
+    this.statusSubject$.next(data.status);
+  }
+
+  private handleError(err: any) {
+    this.statusSubject$.next(err.status);
+  }
+
+  getAllHotels(page: number) {
     this.apiService.getAllHotels(page).subscribe({
-      next : (data) => {
-        this.hotelSubject$.next(data.body?.content || []);
-        this.totalHotelsSubject$.next(data.body?.totalElements || 0);
-        this.statusSubject$.next(data.status)
-      },
-      error:(err) =>{
-        this.statusSubject$.next(err.status)
-      },
-
-    })
+      next: (data) => this.handleResponseData(data),
+      error: (err) => this.handleError(err),
+    });
   }
 
-  getHotelByCityName(id : number, page : number){
+  getHotelByCityName(id: number, page: number) {
     this.apiService.getHotelByCityName(page, id).subscribe({
-      next:(data)=>{
-        this.hotelSubject$.next(data.body?.content || []);
-        this.totalHotelsSubject$.next(data.body?.totalElements || 0);
-        this.statusSubject$.next(data.status)
-      },
-      error:(err) =>{
-        this.statusSubject$.next(err.status)
-      },
-    })
+      next: (data) => this.handleResponseData(data),
+      error: (err) => this.handleError(err),
+    });
   }
 
-  getHotelByKw(kw :string, page : number){
+  getHotelByKw(kw: string, page: number) {
     this.apiService.getCityByKeyWord(kw, page).subscribe({
-      next:(data) => {
-        this.hotelSubject$.next(data.body?.content || []);
-        this.totalHotelsSubject$.next(data.body?.totalElements || 0);
-        this.statusSubject$.next(data.status)
-      },
-      error:(err) =>{
-        this.statusSubject$.next(err.status)
-      },
-    })
+      next: (data) => this.handleResponseData(data),
+      error: (err) => this.handleError(err),
+    });
   }
 
 

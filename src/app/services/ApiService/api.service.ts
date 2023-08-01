@@ -20,7 +20,6 @@ interface ResponsePagination {
 export class ApiService {
 
   constructor(private http : HttpClient) {
-    this.getAllCities();
   }
 
   getAllHotels(page : number):Observable<HttpResponse<ResponsePagination>>{

@@ -14,15 +14,15 @@ export class MainComponent implements OnInit {
   errorStatus!: number;
   constructor(private hotelService : HotelService){}
   ngOnInit(): void {
-    this.hotelService.hotels$.subscribe({
+    this.hotelService.hotelSubject$.subscribe({
       next : (data) => {
         this.hotels = data;
       }
     })
 
-    this.hotelService.totalHotels$.subscribe((data) => this.totalHotels = data)
+    this.hotelService.totalHotelsSubject$.subscribe((data) => this.totalHotels = data)
 
-    this.hotelService.status.subscribe({
+    this.hotelService.statusSubject$.subscribe({
       next: (data) => this.errorStatus = data
     })
   }

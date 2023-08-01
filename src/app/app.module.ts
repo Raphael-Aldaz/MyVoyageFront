@@ -19,6 +19,7 @@ import { MatPaginatorModule} from '@angular/material/paginator';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { HotelComponent } from './components/hotel/hotel.component';
 
 
 
@@ -30,6 +31,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     CardComponent,
     FooterComponent,
     NavBarComponent,
+    HotelComponent,
 
   ],
   imports: [
