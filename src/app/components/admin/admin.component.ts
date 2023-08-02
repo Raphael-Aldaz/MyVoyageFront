@@ -16,7 +16,7 @@ export class AdminComponent implements OnInit {
   totalHotels! : number;
   constructor(private authService : AuthService, private hotelService:HotelService){}
   ngOnInit(): void {
-    this.authService.userConnected$.subscribe({
+    this.authService.userConnectedSubject$.subscribe({
       next: (data) => this.username = data,
     })
     this.hotelService.hotel$.subscribe({

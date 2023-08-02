@@ -16,7 +16,7 @@ export class CardComponent {
   @Input() hotel! : Hotel;
 
 constructor(private auth : AuthService, private hotelService : HotelService, private router : Router){
-  this.auth.roles.subscribe({
+  this.auth.role$.subscribe({
     next:(data) => {
       if(data.includes("SUPERVISEUR")){
         this.isAdmin$ = true;

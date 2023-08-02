@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../ApiService/api.service';
 import { JwtService } from '../JwtService/jwt.service';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 
 interface RoleData {
   sub: string;
@@ -14,9 +15,14 @@ interface RoleData {
   providedIn: 'root'
 })
 export class AuthService {
-  isConnected$ : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
-  roles : BehaviorSubject<string []> = new BehaviorSubject<string[]>([])
-  userConnected$ : BehaviorSubject<string> = new BehaviorSubject<string>("")
+  isConnectedSubject$ : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  isConnected$: Observable<boolean> = this.isConnectedSubject$.asObservable();
+
+  rolesSubject$ : BehaviorSubject<string []> = new BehaviorSubject<string[]>([])
+  role$ : Observable<String[]> = this.rolesSubject$.asObservable();
+
+  userConnectedSubject$ : BehaviorSubject<string> = new BehaviorSubject<string>("")
+  userConnectd$ : Observable<string> = this.userConnectedSubject$.asObservable();
 
   constructor(private apiService : ApiService, private jwtService : JwtService) {
     this.checkToken();
@@ -37,7 +43,7 @@ export class AuthService {
         localStorage.setItem("jwt" , jwtStored)
         if(jwt){
           this.getRoles(jwt)
-          this.isConnected$.next(true)
+          this.isConnectedSubject$.next(true)
         }
       },
       error : (err) => console.log(err),
@@ -47,18 +53,18 @@ export class AuthService {
   getRoles(jwt: string) {
     if (jwt) {
       const jwtDecoded: RoleData = this.jwtService.DecodeToken(jwt);
-      this.roles.next(jwtDecoded.roles);
+      this.rolesSubject$.next(jwtDecoded.roles);
     }
   }
   checkToken(){
     const token = localStorage.getItem('jwt');
     if(token){
       const jwtDecoded: RoleData = this.jwtService.DecodeToken(token);
-      this.isConnected$.next(true)
-      this.userConnected$.next(jwtDecoded.sub)
+      this.isConnectedSubject$.next(true)
+      this.userConnectedSubject$.next(jwtDecoded.sub)
 
     } else {
-      this.isConnected$.next(false)
+      this.isConnectedSubject$.next(false)
 
     }
   }

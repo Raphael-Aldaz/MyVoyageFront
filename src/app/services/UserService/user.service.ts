@@ -50,6 +50,7 @@ export class UserService {
     this.apiService.saveUser(user).subscribe({
       next: (data) => console.log(data),
       error: (err) => this.handleError(err),
+      complete:()=> this.getAllUsers(0)
     })
 
   }

@@ -9,7 +9,7 @@ export const userGuard: CanActivateFn = (
     const router = inject(Router)
     let roles : string[] = []
 
-    authService.roles.subscribe({
+    authService.rolesSubject$.subscribe({
       next : (data) => roles = data,
     })
 

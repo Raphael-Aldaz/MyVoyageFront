@@ -46,9 +46,10 @@ export class NavBarComponent implements OnInit {
 
   logout(){
     localStorage.removeItem("jwt")
-    this.auth.isConnected$.next(false)
+    this.auth.isConnectedSubject$.next(false)
+    this.auth.rolesSubject$.next([])
+    this.hotelService.getAllHotels(0);
     this.router.navigateByUrl("/")
-
   }
 
 }
