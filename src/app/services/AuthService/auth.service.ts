@@ -15,10 +15,15 @@ interface RoleData {
 })
 export class AuthService {
   isConnected$ : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
-  roles : string [] = [];
+  roles : BehaviorSubject<string []> = new BehaviorSubject<string[]>([])
+  userConnected$ : BehaviorSubject<string> = new BehaviorSubject<string>("")
 
   constructor(private apiService : ApiService, private jwtService : JwtService) {
     this.checkToken();
+    const token =localStorage.getItem("jwt")
+    if(token){
+      this.getRoles(token)
+    }
    }
 
   login(username : string, password : string){
@@ -34,7 +39,6 @@ export class AuthService {
           this.getRoles(jwt)
           this.isConnected$.next(true)
         }
-
       },
       error : (err) => console.log(err),
     })
@@ -43,14 +47,20 @@ export class AuthService {
   getRoles(jwt: string) {
     if (jwt) {
       const jwtDecoded: RoleData = this.jwtService.DecodeToken(jwt);
-      this.roles = jwtDecoded.roles;
+      this.roles.next(jwtDecoded.roles);
     }
   }
   checkToken(){
     const token = localStorage.getItem('jwt');
     if(token){
-      console.log(token, "token")
+      const jwtDecoded: RoleData = this.jwtService.DecodeToken(token);
       this.isConnected$.next(true)
+      this.userConnected$.next(jwtDecoded.sub)
+
+    } else {
+      this.isConnected$.next(false)
+
     }
   }
+
 }

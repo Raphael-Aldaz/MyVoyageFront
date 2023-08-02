@@ -21,6 +21,10 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { HotelComponent } from './components/hotel/hotel.component';
 import { LoginComponent } from './components/login/login.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { UpdateHotelComponent } from './components/update-hotel/update-hotel.component';
+import { UsersComponent } from './components/users/users.component';
+import { UserFormComponent } from './components/user-form/user-form.component';
 
 
 
@@ -34,6 +38,10 @@ import { LoginComponent } from './components/login/login.component';
     NavBarComponent,
     HotelComponent,
     LoginComponent,
+    AdminComponent,
+    UpdateHotelComponent,
+    UsersComponent,
+    UserFormComponent,
 
   ],
   imports: [

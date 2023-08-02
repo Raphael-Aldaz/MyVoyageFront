@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { City } from 'src/app/models/city.models';
 import { AuthService } from 'src/app/services/AuthService/auth.service';
 import { CityService } from 'src/app/services/CityService/city.service';
@@ -14,7 +15,7 @@ export class NavBarComponent implements OnInit {
   isConnected : boolean = false
   destinations$ : City[] = []
   kw : string = ""
-  constructor(private cityService : CityService, private hotelService : HotelService, private auth:AuthService){}
+  constructor(private cityService : CityService, private hotelService : HotelService, private auth:AuthService, private router : Router){}
   ngOnInit(): void {
     this.cityService.hotels$.subscribe({
       next:(data)=> {
@@ -46,6 +47,8 @@ export class NavBarComponent implements OnInit {
   logout(){
     localStorage.removeItem("jwt")
     this.auth.isConnected$.next(false)
+    this.router.navigateByUrl("/")
+
   }
 
 }

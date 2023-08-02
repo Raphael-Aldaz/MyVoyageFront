@@ -23,7 +23,9 @@
                     <li (click)="onClick(city)" ><a  class="block px-3 py-2 hover:bg-gray-200">{{city.name}} - {{city.country}}</a></li>
                 </ul>
             </div>
-
+      </li>
+      <li *ngIf="isConnected">
+        <a class="hover:text-gray-200"  routerLink="/admin">Admin</a>
       </li>
         </ul>
         <form (submit)="onSubmit()" class="lg:flex hidden items-center space-x-2 bg-white py-1 px-2 rounded-full mr-5">
