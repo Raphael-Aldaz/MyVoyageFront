@@ -7,12 +7,16 @@ export const userGuard: CanActivateFn = (
   ) => {
     const authService = inject(AuthService)
     const router = inject(Router)
-    console.log(authService.roles)
+    let roles : string[] = []
 
-    if(authService.roles.includes('SUPERVISEUR') || authService.roles.includes('GESTIONNAIRE') ) {
+    authService.roles.subscribe({
+      next : (data) => roles = data,
+    })
+
+    if(roles.includes('SUPERVISEUR') || roles.includes('GESTIONNAIRE') ) {
       return true
     } else {
-      router.navigateByUrl('/loginForm')
+      router.navigateByUrl('/login')
       return false
     }
 

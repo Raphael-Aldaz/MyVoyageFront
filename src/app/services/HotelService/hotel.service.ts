@@ -9,13 +9,20 @@ import { Observable } from 'rxjs/internal/Observable';
   providedIn: 'root'
 })
 export class HotelService {
+  private totalTrainingsSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  totalTrainings$: Observable<number> = this.totalTrainingsSubject$.asObservable();
 
-  hotelSubject$: Subject<Hotel[]> = new Subject<Hotel[]>();
-  totalHotelsSubject$: Subject<number> = new Subject<number>();
-  statusSubject$: Subject<number> = new Subject<number>();
+  private hotelSubject$: BehaviorSubject<Hotel[]> = new BehaviorSubject<Hotel[]>([]);
+  hotel$: Observable<Hotel[]> = this.hotelSubject$.asObservable();
+
+  private totalHotelsSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  totalHotels$: Observable<number> = this.totalHotelsSubject$.asObservable();
+
+  private statusSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  status$: Observable<number> = this.statusSubject$.asObservable();
 
   constructor(private apiService: ApiService) {
-    this.getAllHotels(0)
+    this.getAllHotels(0);
   }
 
   private handleResponseData(data: any) {
@@ -49,5 +56,29 @@ export class HotelService {
     });
   }
 
+  getHotelById(id: number) {
+    return this.apiService.getHotelById(id);
+  }
 
+  updateHotel(hotel: FormData, id: string) {
+    this.apiService.updateHotel(hotel, id).subscribe({
+      next: (data) => console.log(data),
+      error: (err) => console.log(err)
+    });
+  }
+
+  saveHotel(hotel: FormData) {
+    this.apiService.saveHotel(hotel).subscribe({
+      next: (data) => console.log(data),
+      error: (err) => this.handleError(err)
+    });
+  }
+
+  deleteHotel(id: number) {
+    this.apiService.deleteHotel(id).subscribe({
+      next: (data) => console.log(data),
+      error: (err) => this.handleError(err),
+      complete: () => this.getAllHotels(0)
+    });
+  }
 }
